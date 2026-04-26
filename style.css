@@ -8,13 +8,22 @@ body {
     flex-direction: column;
     font-family: "Segoe UI", sans-serif;
 
-    background: repeating-linear-gradient(
-        0deg,
-        #e8f5e9,
-        #e8f5e9 20px,
-        #e3f2e6 20px,
-        #e3f2e6 40px
-    );
+    /* 🌄 ẢNH NỀN */
+    background-image: url("ss.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    position: relative;
+}
+
+/* 🌫 lớp phủ để dễ đọc chữ */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.35);
+    z-index: -1;
 }
 
 .title {
@@ -144,7 +153,7 @@ body {
     text-align: center;
 }
 
-/* ===== MOBILE FIX ===== */
+/* MOBILE */
 @media (max-width: 600px) {
 
     .title {
