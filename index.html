@@ -11,12 +11,13 @@
 
 <div class="menu-btn" onclick="openForm()">⋯</div>
 
+
 <div class="board" id="board"></div>
 
 <!-- FORM -->
 <div class="overlay" id="overlay" onclick="closeForm(event)">
     <div class="input-box" onclick="event.stopPropagation()">
-        <b>Thêm lời chúc</b>
+        <b>Thêm lời chúc 💌</b>
         <input id="name" placeholder="Tên">
         <textarea id="msg" placeholder="Lời chúc..."></textarea>
         <button onclick="addNote()">Tạo 🎉</button>
@@ -27,6 +28,9 @@
 <div class="popup" id="popup" onclick="closePopup()">
     <div class="popup-box" id="popupText"></div>
 </div>
+
+<!-- 🍀 CLOVER -->
+<div class="clover-container"></div>
 
 <script src="script.js"></script>
 </body>
