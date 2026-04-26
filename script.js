@@ -8,14 +8,6 @@ if(!userId){
     localStorage.setItem("userId", userId);
 }
 
-/* DOM (PHẢI Ở SAU HTML LOAD) */
-const board = document.getElementById("board");
-const overlay = document.getElementById("overlay");
-const nameInput = document.getElementById("name");
-const msgInput = document.getElementById("msg");
-const popup = document.getElementById("popup");
-const popupText = document.getElementById("popupText");
-
 function rand(a){
     return a[Math.floor(Math.random()*a.length)];
 }
@@ -35,7 +27,7 @@ function closeForm(e){
     if(e.target.id==="overlay") overlay.style.display="none";
 }
 
-/* ADD NOTE (LƯU FULL STYLE) */
+/* ADD NOTE (🔥 FIX LƯU FULL STYLE) */
 function addNote(){
     const name=nameInput.value.trim();
     const msg=msgInput.value.trim();
@@ -48,8 +40,9 @@ function addNote(){
         msg,
         owner:userId,
 
+        // 🎨 FIX QUAN TRỌNG
         color: rand(noteColors),
-        pin: rand(pinColors),
+        pinColor: rand(pinColors),
         rotate: (Math.random()*8-4),
         decor: [rand(decors), rand(decors)]
     };
@@ -64,9 +57,9 @@ function addNote(){
     render();
 }
 
-/* RENDER NOTE */
+/* CREATE NOTE */
 function createNote(d,i){
-    const {name,msg,owner,color,pin,rotate,decor}=d;
+    const {name,msg,owner,color,pinColor,rotate,decor} = d;
 
     const note=document.createElement("div");
     note.className="note";
@@ -74,29 +67,24 @@ function createNote(d,i){
     note.style.background=color;
     note.style.setProperty("--rotate",rotate);
 
-    const p=document.createElement("div");
-    p.className="pin";
-    p.style.background=pin;
-    note.appendChild(p);
+    const pin=document.createElement("div");
+    pin.className="pin";
+    pin.style.background=pinColor;
+    note.appendChild(pin);
 
     const c=document.createElement("div");
     c.className="note-content";
     c.innerHTML=`<b>${name}</b><br><small>Xem 💌</small>`;
     note.appendChild(c);
 
-    const pos=[
-        {top:"5px",left:"5px"},
-        {top:"5px",right:"5px"},
-        {bottom:"5px",left:"5px"},
-        {bottom:"5px",right:"5px"}
-    ];
+    const pos=[{top:"5px",left:"5px"},{top:"5px",right:"5px"},{bottom:"5px",left:"5px"},{bottom:"5px",right:"5px"}];
 
     decor.forEach(t=>{
-        const el=document.createElement("div");
-        el.className="decor";
-        el.innerText=t;
-        Object.assign(el.style, rand(pos));
-        note.appendChild(el);
+        const d=document.createElement("div");
+        d.className="decor";
+        d.innerText=t;
+        Object.assign(d.style, rand(pos));
+        note.appendChild(d);
     });
 
     note.onclick=()=>showPopup(name+": "+msg);
@@ -135,7 +123,7 @@ function showPopup(t){
 }
 function closePopup(){ popup.style.display="none"; }
 
-/* CLOVER (NHẸ KHÔNG LAG) */
+/* 🍃 CLOVER (NHẸ, KHÔNG LAG) */
 function spawnClover(){
     const c=document.createElement("div");
     c.className="clover";
@@ -153,4 +141,11 @@ function loopClover(){
 loopClover();
 
 /* INIT */
+const board=document.getElementById("board");
+const overlay=document.getElementById("overlay");
+const nameInput=document.getElementById("name");
+const msgInput=document.getElementById("msg");
+const popup=document.getElementById("popup");
+const popupText=document.getElementById("popupText");
+
 render();
