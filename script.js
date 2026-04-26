@@ -1,9 +1,6 @@
 const noteColors = ["#fff9c4","#ffecb3","#ffcdd2","#bbdefb","#d1c4e9","#c8e6c9"];
 const pinColors = ["#e53935","#1e88e5","#fdd835","#8e24aa","#43a047"];
-
 const decors = ["📎","📌","🧷","📖","✏️","📝","🌿","🍃","🌸","💌","📮","💭"];
-
-let lastColors = [];
 
 let userId = localStorage.getItem("userId");
 if(!userId){
@@ -11,25 +8,17 @@ if(!userId){
     localStorage.setItem("userId", userId);
 }
 
-function rand(a){
-    return a[Math.floor(Math.random()*a.length)];
-}
-
-function getColor(){
-    let c;
-    do {
-        c = rand(noteColors);
-    } while(lastColors.slice(-4).includes(c));
-    lastColors.push(c);
-    return c;
-}
-
+/* STORAGE */
 function saveNotes(data){
     localStorage.setItem("notes9A1", JSON.stringify(data));
 }
 
 function loadNotes(){
     return JSON.parse(localStorage.getItem("notes9A1") || "[]");
+}
+
+function rand(arr){
+    return arr[Math.floor(Math.random()*arr.length)];
 }
 
 /* FORM */
@@ -50,7 +39,7 @@ function createNote(noteData, index){
     const note = document.createElement("div");
     note.className = "note";
 
-    note.style.background = getColor();
+    note.style.background = rand(noteColors);
     note.style.setProperty("--rotate",(Math.random()*8-4)+"deg");
 
     const pin = document.createElement("div");
@@ -101,6 +90,7 @@ function createNote(noteData, index){
     return note;
 }
 
+/* ADD */
 function addNote(){
     const name = nameInput.value.trim();
     const msg = msgInput.value.trim();
@@ -121,10 +111,12 @@ function addNote(){
     renderNotes();
 }
 
+/* RENDER */
 function renderNotes(){
     board.innerHTML = "";
-    lastColors = [];
-    loadNotes().forEach((n,i)=>board.appendChild(createNote(n,i)));
+    loadNotes().forEach((n,i)=>{
+        board.appendChild(createNote(n,i));
+    });
 }
 
 /* POPUP */
@@ -139,20 +131,22 @@ function closePopup(){
 
 /* 🍀 CLOVER */
 function createClover(){
-    const clover = document.createElement("div");
-    clover.className = "clover";
-    clover.innerText = "🍀";
+    const c = document.createElement("div");
+    c.className = "clover";
 
-    clover.style.left = Math.random()*100 + "vw";
-    clover.style.animationDuration = (3+Math.random()*5) + "s";
-    clover.style.fontSize = (14+Math.random()*10) + "px";
+    const icons = ["🍀","🍃","🌿"];
+    c.innerText = rand(icons);
 
-    document.querySelector(".clover-container").appendChild(clover);
+    c.style.left = Math.random()*100 + "vw";
+    c.style.animationDuration = (3+Math.random()*4) + "s";
+    c.style.fontSize = (14+Math.random()*12) + "px";
 
-    setTimeout(()=>clover.remove(),8000);
+    document.querySelector(".clover-container").appendChild(c);
+
+    setTimeout(()=>c.remove(),8000);
 }
 
-setInterval(createClover,400);
+setInterval(createClover,250);
 
 /* INIT */
 const board = document.getElementById("board");
