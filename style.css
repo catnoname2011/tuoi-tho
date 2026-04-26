@@ -8,6 +8,7 @@ body {
     flex-direction: column;
     font-family: "Segoe UI", sans-serif;
 
+    /* 🌄 BACKGROUND */
     background-image: url("./ss.png");
     background-size: cover;
     background-position: center;
@@ -57,11 +58,11 @@ body::before {
     width: 130px;
     height: 130px;
     padding: 10px;
+
     position: relative;
     cursor: pointer;
 
     background: linear-gradient(135deg, #fffdf5, #fff3c4);
-
     border-radius: 18px;
     border: 2px solid rgba(0,0,0,0.08);
 
@@ -77,7 +78,6 @@ body::before {
     transform: scale(1.06) rotate(var(--rotate));
 }
 
-/* bay nhẹ */
 @keyframes floatNote {
     0% { transform: translateY(0px) rotate(var(--rotate)); }
     50% { transform: translateY(-6px) rotate(calc(var(--rotate) + 1deg)); }
@@ -105,7 +105,7 @@ body::before {
     box-shadow: 0 3px 6px rgba(0,0,0,0.25);
 }
 
-/* STICKER DECOR */
+/* DECOR */
 .decor {
     position: absolute;
     font-size: 14px;
