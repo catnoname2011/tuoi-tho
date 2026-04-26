@@ -8,7 +8,7 @@ body {
     flex-direction: column;
     font-family: "Segoe UI", sans-serif;
 
-    /* 🌄 background rõ */
+    /* 🌄 BACKGROUND */
     background-image: url("./ss.png");
     background-size: cover;
     background-position: center;
@@ -17,7 +17,7 @@ body {
     position: relative;
 }
 
-/* 🌫 rất nhẹ thôi (không làm mờ ảnh nữa) */
+/* 🌫 overlay cực nhẹ */
 body::before {
     content: "";
     position: fixed;
@@ -43,13 +43,22 @@ body::after {
     color: #2e7d32;
 }
 
+/* MENU */
+.menu-btn {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
 /* BOARD */
 .board {
     flex: 1;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 18px;
     padding: 15px;
 }
 
@@ -152,7 +161,7 @@ body::after {
     text-align: center;
 }
 
-/* 🍃 CLOVER NHẸ */
+/* 🍃 CLOVER (NHẸ) */
 .clover-container {
     position: fixed;
     inset: 0;
