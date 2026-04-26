@@ -1,6 +1,6 @@
 const noteColors = ["#fff9c4","#ffecb3","#ffcdd2","#bbdefb","#d1c4e9","#c8e6c9"];
 const pinColors = ["#e53935","#1e88e5","#fdd835","#8e24aa","#43a047"];
-const decors = ["📎","📌","🧷","🌸","💌","🍀","🍃","🌿"];
+const decors = ["📎","📌","🧷","📖","✏️","📝","🌿","🍃","🌸","💌","📮","💭"];
 
 let userId = localStorage.getItem("userId");
 if(!userId){
@@ -8,28 +8,32 @@ if(!userId){
     localStorage.setItem("userId", userId);
 }
 
-function rand(a){
-    return a[Math.floor(Math.random()*a.length)];
-}
-
-/* STORAGE */
-function saveNotes(d){
-    localStorage.setItem("notes9A1", JSON.stringify(d));
+function saveNotes(data){
+    localStorage.setItem("notes9A1", JSON.stringify(data));
 }
 
 function loadNotes(){
     return JSON.parse(localStorage.getItem("notes9A1") || "[]");
 }
 
+function rand(arr){
+    return arr[Math.floor(Math.random()*arr.length)];
+}
+
 /* FORM */
-function openForm(){ overlay.style.display = "flex"; }
+function openForm(){
+    overlay.style.display = "flex";
+}
+
 function closeForm(e){
-    if(e.target.id === "overlay") overlay.style.display = "none";
+    if(e.target.id === "overlay"){
+        overlay.style.display = "none";
+    }
 }
 
 /* NOTE */
-function createNote(data,i){
-    const {name,msg,owner} = data;
+function createNote(noteData, index){
+    const {name, msg, owner} = noteData;
 
     const note = document.createElement("div");
     note.className = "note";
@@ -44,31 +48,37 @@ function createNote(data,i){
 
     const c = document.createElement("div");
     c.className = "note-content";
-    c.innerHTML = `<b>${name}</b><br><small>Xem 💌</small>`;
+    c.innerHTML = `<b>${name}</b><br><small>Xem lời chúc 💌</small>`;
     note.appendChild(c);
+
+    const positions = [
+        {top:"5px",left:"5px"},
+        {top:"5px",right:"5px"},
+        {bottom:"5px",left:"5px"},
+        {bottom:"5px",right:"5px"}
+    ];
 
     for(let i=0;i<2;i++){
         const d = document.createElement("div");
         d.className = "decor";
         d.innerText = rand(decors);
-        d.style.top = Math.random()*100+"%";
-        d.style.left = Math.random()*100+"%";
+        Object.assign(d.style, rand(positions));
         note.appendChild(d);
     }
 
-    note.onclick = ()=> showPopup(name+": "+msg);
+    note.onclick = () => showPopup(name + ": " + msg);
 
-    if(owner===userId){
+    if(owner === userId){
         const del = document.createElement("div");
-        del.innerText="❌";
-        del.className="delete";
+        del.innerText = "❌";
+        del.className = "delete";
 
-        del.onclick=(e)=>{
+        del.onclick = (e)=>{
             e.stopPropagation();
-            const arr=loadNotes();
-            arr.splice(i,1);
-            saveNotes(arr);
-            render();
+            const notes = loadNotes();
+            notes.splice(index,1);
+            saveNotes(notes);
+            renderNotes();
         };
 
         note.appendChild(del);
@@ -77,26 +87,25 @@ function createNote(data,i){
     return note;
 }
 
-/* ADD */
 function addNote(){
-    const name=nameInput.value.trim();
-    const msg=msgInput.value.trim();
-    if(!name||!msg) return alert("Nhập đủ!");
+    const name = nameInput.value.trim();
+    const msg = msgInput.value.trim();
 
-    const arr=loadNotes();
-    arr.push({name,msg,owner:userId});
-    saveNotes(arr);
+    if(!name || !msg) return alert("Nhập đủ!");
+
+    const notes = loadNotes();
+    notes.push({name,msg,owner:userId});
+    saveNotes(notes);
 
     overlay.style.display="none";
     nameInput.value="";
     msgInput.value="";
 
-    render();
+    renderNotes();
 }
 
-/* RENDER */
-function render(){
-    board.innerHTML="";
+function renderNotes(){
+    board.innerHTML = "";
     loadNotes().forEach((n,i)=>{
         board.appendChild(createNote(n,i));
     });
@@ -104,35 +113,37 @@ function render(){
 
 /* POPUP */
 function showPopup(t){
-    popupText.innerText=t;
+    popupText.innerText = t;
     popup.style.display="flex";
 }
-function closePopup(){ popup.style.display="none"; }
 
-/* 🍃 CLOVER NHẸ (KHÔNG LAG) */
-function spawnClover(){
-    const c=document.createElement("div");
-    c.className="clover";
-    c.innerText=["🍀","🍃","🌿"][Math.floor(Math.random()*3)];
-    c.style.left=Math.random()*100+"vw";
-    c.style.animationDuration=(4+Math.random()*3)+"s";
+function closePopup(){
+    popup.style.display="none";
+}
+
+/* CLOVER */
+function createClover(){
+    const c = document.createElement("div");
+    c.className = "clover";
+
+    const icons = ["🍀","🍃","🌿"];
+    c.innerText = rand(icons);
+
+    c.style.left = Math.random()*100 + "vw";
+    c.style.animationDuration = (3+Math.random()*4) + "s";
+
     document.querySelector(".clover-container").appendChild(c);
-    setTimeout(()=>c.remove(),9000);
+    setTimeout(()=>c.remove(),8000);
 }
 
-/* thay setInterval → giảm lag */
-function loopClover(){
-    spawnClover();
-    setTimeout(loopClover, 900 + Math.random()*1200);
-}
-loopClover();
+setInterval(createClover,300);
 
 /* INIT */
-const board=document.getElementById("board");
-const overlay=document.getElementById("overlay");
-const nameInput=document.getElementById("name");
-const msgInput=document.getElementById("msg");
-const popup=document.getElementById("popup");
-const popupText=document.getElementById("popupText");
+const board = document.getElementById("board");
+const overlay = document.getElementById("overlay");
+const nameInput = document.getElementById("name");
+const msgInput = document.getElementById("msg");
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popupText");
 
-render();
+renderNotes();
