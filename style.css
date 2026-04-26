@@ -8,7 +8,6 @@ body {
     flex-direction: column;
     font-family: "Segoe UI", sans-serif;
 
-    /* 🌄 BACKGROUND RÕ */
     background-image: url("./ss.png");
     background-size: cover;
     background-position: center;
@@ -86,7 +85,6 @@ body::after {
     50% { transform: translateY(-5px) rotate(var(--rotate)); }
 }
 
-/* hover nổi */
 .note:hover {
     transform: scale(1.06) rotate(var(--rotate));
     box-shadow: 0 25px 40px rgba(0,0,0,0.25);
@@ -164,7 +162,7 @@ body::after {
     text-align: center;
 }
 
-/* 🍃 CLOVER (NHẸ + KHÔNG LAG) */
+/* 🍃 CLOVER */
 .clover-container {
     position: fixed;
     inset: 0;
