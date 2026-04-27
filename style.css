@@ -145,11 +145,19 @@ body::after {
     z-index: 4;
 }
 
-/* ===== FORM CLEAN ===== */
-
+/* FULL màn hình + blur đều */
 .overlay {
-    backdrop-filter: blur(6px);
-    background: rgba(0,0,0,0.3);
+    position: fixed;
+    inset: 0;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(8px);
+
+    z-index: 999;
 }
 
 /* khung chính */
@@ -489,4 +497,21 @@ body::after {
     opacity: 0.6;
     filter: blur(6px);
     z-index: -1;
+}
+
+/* đảm bảo form luôn ở giữa */
+.input-box {
+    margin: auto;
+}
+
+/* thêm glow nhẹ */
+.input-box {
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.3),
+        0 0 20px rgba(255,150,150,0.3);
+}
+
+/* title đẹp hơn */
+.input-box b {
+    letter-spacing: 1px;
 }
