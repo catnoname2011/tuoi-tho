@@ -327,15 +327,13 @@ body::after {
     to { opacity: 1; }
 }
 
-/* 🌸 BIẾN input-box THÀNH FORM XINH */
+/* ===== FORM FINAL ===== */
 
-/* nền overlay */
 .overlay {
     backdrop-filter: blur(6px);
     background: rgba(0,0,0,0.3);
 }
 
-/* form chính */
 .input-box {
     width: 550px;
     max-width: 92%;
@@ -349,9 +347,13 @@ body::after {
     box-shadow: 0 25px 60px rgba(0,0,0,0.25);
 
     animation: formPop 0.35s ease;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* viền nét đứt */
+/* viền */
 .input-box::after {
     content: "";
     position: absolute;
@@ -360,109 +362,75 @@ body::after {
     border: 2px dashed #f5b5b5;
 }
 
-/* 🎀 giả sticker băng keo */
+/* băng keo */
 .input-box::before {
     content: "";
     position: absolute;
-
     width: 110px;
     height: 40px;
-
     background: rgba(255,182,193,0.7);
-
     top: -15px;
     left: 25px;
-
     transform: rotate(-15deg);
     border-radius: 10px;
 }
 
 /* title */
 .input-box b {
-    display: block;
+    font-size: 36px;
+    margin-bottom: 15px;
     text-align: center;
-
-    font-size: 38px;
-    font-weight: 600;
-
-    color: #5c3d36;
-    margin-bottom: 25px;
-
-    font-family: "Comic Sans MS", cursive;
 }
 
-/* input + textarea */
+/* input */
 .input-box input,
 .input-box textarea {
     width: 100%;
-    margin-bottom: 15px;
+    max-width: 450px;
 
-    padding: 14px 16px;
+    padding: 14px;
+    margin-top: 10px;
 
-    border-radius: 16px;
+    border-radius: 15px;
     border: 2px solid #f3b6b6;
 
-    background: rgba(255,255,255,0.85);
+    background: white;
 
-    font-size: 15px;
-    outline: none;
-
-    transition: 0.2s;
-}
-
-/* focus */
-.input-box input:focus,
-.input-box textarea:focus {
-    border-color: #ff8fa3;
-    box-shadow: 0 0 0 3px rgba(255,143,163,0.2);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 /* textarea */
 .input-box textarea {
-    height: 130px;
-    resize: none;
+    height: 120px;
 }
 
 /* button */
 .input-box button {
-    width: 70%;
-    margin: 15px auto 0;
-    display: block;
+    width: 60%;
+    margin-top: 15px;
 
     padding: 14px;
-
-    border: none;
     border-radius: 25px;
 
-    font-size: 18px;
-    font-weight: bold;
-
+    border: none;
     color: white;
+    font-weight: bold;
 
     background: linear-gradient(45deg, #ff9a9e, #ff6a88);
 
-    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(255,106,136,0.5);
     transition: 0.25s;
-
-    box-shadow: 0 12px 30px rgba(255,106,136,0.4);
 }
 
 .input-box button:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.02);
 }
 
 .input-box button:active {
     transform: scale(0.96);
 }
 
-/* animation */
 @keyframes formPop {
-    from {
-        transform: scale(0.85);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
