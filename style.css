@@ -740,3 +740,22 @@ body {
         0 30px 70px rgba(0,0,0,0.3),
         0 0 25px rgba(255,150,150,0.4);
 }
+
+/* ===== ÉP MÀU NOTE GIỐNG FORM ===== */
+.note {
+    background: linear-gradient(135deg, #fff6f0, #ffe9e3) !important;
+}
+
+/* khung chữ bên trong */
+.note-content {
+    background: rgba(255, 246, 240, 0.9) !important;
+    border: 2px solid #f3b6b6 !important;
+}
+
+/* fade chữ cũng phải cùng màu */
+.note-msg::after {
+    background: linear-gradient(
+        transparent,
+        rgba(255, 246, 240, 0.95)
+    ) !important;
+}
