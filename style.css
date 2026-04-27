@@ -322,3 +322,169 @@ body {
     0% { transform: translateY(-10vh); opacity: 0; }
     100% { transform: translateY(110vh); opacity: 0; }
 }
+
+/* ===== THU NHỎ NOTE ===== */
+.note {
+    width: 110px;
+    min-height: 110px;
+    padding: 8px;
+
+    border-radius: 18px;
+}
+
+/* text nhỏ lại cho cân */
+.note-name {
+    font-size: 12px;
+}
+
+.note-msg {
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+.note-time {
+    font-size: 9px;
+}
+
+/* băng keo nhỏ lại */
+.note::before {
+    width: 40px;
+    height: 14px;
+    top: -6px;
+}
+
+/* viền gọn hơn */
+.note::after {
+    inset: 6px;
+}
+
+/* icon 👑 nhỏ lại */
+.owner-icon {
+    font-size: 13px;
+}
+
+/* ===== NOTE STYLE GIỐNG FORM ===== */
+.note {
+    width: 140px;
+    min-height: 140px;
+    padding: 12px;
+
+    position: relative;
+    cursor: pointer;
+
+    border-radius: 22px;
+
+    background: linear-gradient(135deg, #fffaf5, #ffe9e3);
+
+    border: 2px solid rgba(255,182,193,0.35);
+
+    box-shadow:
+        0 15px 30px rgba(0,0,0,0.2),
+        0 0 12px rgba(255,150,150,0.25);
+
+    transition: 0.25s;
+}
+
+/* hover giống form nổi lên */
+.note:hover {
+    transform: translateY(-5px) scale(1.05) rotate(var(--rotate));
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.3),
+        0 0 18px rgba(255,150,150,0.4);
+}
+
+/* viền nét đứt giống form */
+.note::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+
+    border-radius: 18px;
+    border: 2px dashed #f5b5b5;
+
+    pointer-events: none;
+}
+
+/* “băng keo” nhỏ */
+.note::before {
+    content: "";
+    position: absolute;
+
+    width: 55px;
+    height: 18px;
+
+    background: rgba(255,182,193,0.6);
+
+    top: -8px;
+    left: 15px;
+
+    transform: rotate(-15deg);
+    border-radius: 6px;
+
+    pointer-events: none;
+}
+
+/* ===== TEXT ===== */
+.note-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #5c3d36;
+    margin-bottom: 5px;
+}
+
+.note-msg {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #444;
+
+    max-height: 3.6em;
+    overflow: hidden;
+    position: relative;
+}
+
+/* fade chữ */
+.note-msg::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+
+    background: linear-gradient(transparent, rgba(255,245,240,0.95));
+}
+
+/* hover bung nội dung */
+.note:hover .note-msg {
+    max-height: 200px;
+}
+
+/* time */
+.note-time {
+    font-size: 10px;
+    color: #888;
+}
+
+/* hint */
+.more-hint {
+    font-size: 10px;
+    opacity: 0.6;
+    text-align: right;
+}
+
+/* ===== OWNER ===== */
+.my-note {
+    border: 2px solid #ff6a88;
+
+    box-shadow:
+        0 15px 35px rgba(255,106,136,0.4),
+        0 0 15px rgba(255,106,136,0.5);
+}
+
+/* 👑 */
+.owner-icon {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 16px;
+}
