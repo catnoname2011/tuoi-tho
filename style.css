@@ -145,23 +145,114 @@ body::after {
     z-index: 4;
 }
 
-/* FORM */
+/* ===== FORM CLEAN ===== */
+
 .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
+    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.3);
 }
 
+/* khung chính */
 .input-box {
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(8px);
-    padding: 22px;
-    border-radius: 18px;
-    width: 320px;
+    width: 520px;
+    max-width: 92%;
+
+    padding: 30px;
+    border-radius: 25px;
+
+    background: linear-gradient(135deg, #fffaf5, #ffe9e3);
+
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: relative;
+}
+
+/* viền nét đứt */
+.input-box::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 20px;
+    border: 2px dashed #f5b5b5;
+}
+
+/* băng keo */
+.input-box::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 35px;
+    background: rgba(255,182,193,0.7);
+    top: -12px;
+    left: 20px;
+    transform: rotate(-15deg);
+    border-radius: 8px;
+}
+
+/* tiêu đề */
+.input-box b {
+    font-size: 32px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* input */
+.input-box input,
+.input-box textarea {
+    width: 100%;
+    max-width: 420px;
+
+    padding: 12px;
+    margin-top: 10px;
+
+    border-radius: 14px;
+    border: 2px solid #f3b6b6;
+
+    background: white;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+/* focus */
+.input-box input:focus,
+.input-box textarea:focus {
+    border-color: #ff8fa3;
+    box-shadow: 0 0 0 2px rgba(255,143,163,0.2);
+}
+
+/* textarea */
+.input-box textarea {
+    height: 110px;
+}
+
+/* button */
+.input-box button {
+    width: 60%;
+    margin-top: 15px;
+
+    padding: 12px;
+    border-radius: 20px;
+
+    border: none;
+    color: white;
+    font-weight: bold;
+
+    background: linear-gradient(45deg, #ff9a9e, #ff6a88);
+
+    box-shadow: 0 10px 25px rgba(255,106,136,0.4);
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.input-box button:hover {
+    transform: translateY(-2px);
 }
 
 /* POPUP */
@@ -327,113 +418,75 @@ body::after {
     to { opacity: 1; }
 }
 
-/* ===== FORM CLEAN ===== */
-
-.overlay {
-    backdrop-filter: blur(6px);
-    background: rgba(0,0,0,0.3);
+.input-box {
+    gap: 10px;
 }
 
-/* khung chính */
-.input-box {
-    width: 520px;
-    max-width: 92%;
-
-    padding: 30px;
-    border-radius: 25px;
-
-    background: linear-gradient(135deg, #fffaf5, #ffe9e3);
-
-    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
+/* bọc input để gắn icon */
+.input-box input,
+.input-box textarea {
+    padding-left: 40px;
+    padding-right: 40px;
     position: relative;
 }
 
-/* viền nét đứt */
+/* icon trái */
+.input-box input::placeholder {
+    position: relative;
+}
+
+/* fake icon bằng background */
+.input-box input {
+    background-image: url("https://cdn-icons-png.flaticon.com/512/1077/1077114.png");
+    background-repeat: no-repeat;
+    background-size: 18px;
+    background-position: 12px center;
+}
+
+/* textarea icon */
+.input-box textarea {
+    background-image: url("https://cdn-icons-png.flaticon.com/512/2462/2462719.png");
+    background-repeat: no-repeat;
+    background-size: 18px;
+    background-position: 12px 14px;
+}
+
+/* lá góc trái */
+.input-box::marker {} /* tránh bug */
+
 .input-box::after {
-    content: "";
-    position: absolute;
-    inset: 12px;
-    border-radius: 20px;
+    background: none;
     border: 2px dashed #f5b5b5;
 }
 
-/* băng keo */
+/* thêm layer sticker */
 .input-box::before {
     content: "";
     position: absolute;
-    width: 100px;
-    height: 35px;
-    background: rgba(255,182,193,0.7);
-    top: -12px;
-    left: 20px;
-    transform: rotate(-15deg);
-    border-radius: 8px;
+    width: 120px;
+    height: 120px;
+
+    background: url("https://pngimg.com/uploads/leaf/leaf_PNG36831.png") no-repeat;
+    background-size: contain;
+
+    bottom: 10px;
+    left: -30px;
+    opacity: 0.8;
 }
-
-/* tiêu đề */
-.input-box b {
-    font-size: 32px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-/* input */
-.input-box input,
-.input-box textarea {
-    width: 100%;
-    max-width: 420px;
-
-    padding: 12px;
-    margin-top: 10px;
-
-    border-radius: 14px;
-    border: 2px solid #f3b6b6;
-
-    background: white;
-
-    font-size: 14px;
-
-    outline: none;
-}
-
-/* focus */
-.input-box input:focus,
-.input-box textarea:focus {
-    border-color: #ff8fa3;
-    box-shadow: 0 0 0 2px rgba(255,143,163,0.2);
-}
-
-/* textarea */
-.input-box textarea {
-    height: 110px;
-}
-
-/* button */
 .input-box button {
-    width: 60%;
-    margin-top: 15px;
-
-    padding: 12px;
-    border-radius: 20px;
-
-    border: none;
-    color: white;
-    font-weight: bold;
-
-    background: linear-gradient(45deg, #ff9a9e, #ff6a88);
-
-    box-shadow: 0 10px 25px rgba(255,106,136,0.4);
-
-    cursor: pointer;
-    transition: 0.2s;
+    position: relative;
+    overflow: hidden;
 }
 
-.input-box button:hover {
-    transform: translateY(-2px);
-}1); opacity: 1; }
+/* glow */
+.input-box button::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 25px;
+
+    background: linear-gradient(45deg, #fff, #ffd1dc, #fff);
+    opacity: 0.6;
+    filter: blur(6px);
+    z-index: -1;
 }
