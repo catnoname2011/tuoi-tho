@@ -515,3 +515,23 @@ body::after {
 .input-box b {
     letter-spacing: 1px;
 }
+
+/* cho phép click xuyên qua layer trang trí */
+.input-box::before,
+.input-box::after {
+    pointer-events: none;
+}
+
+/* đảm bảo input nằm trên */
+.input-box input,
+.input-box textarea,
+.input-box button {
+    position: relative;
+    z-index: 2;
+}
+
+/* đảm bảo form ăn click */
+.input-box {
+    position: relative;
+    z-index: 3;
+}
