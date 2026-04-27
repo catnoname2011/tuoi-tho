@@ -488,3 +488,70 @@ body {
     right: -8px;
     font-size: 16px;
 }
+
+/* ===== INTRO SCREEN ===== */
+.intro {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(6px);
+
+    z-index: 1000;
+}
+
+/* khung */
+.intro-box {
+    padding: 30px 40px;
+
+    border-radius: 25px;
+
+    background: linear-gradient(135deg, #fffaf5, #ffe9e3);
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.3),
+        0 0 20px rgba(255,150,150,0.3);
+
+    cursor: pointer;
+    animation: introPop 0.4s ease;
+}
+
+/* viền nét đứt */
+.intro-box::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border-radius: 18px;
+    border: 2px dashed #f5b5b5;
+}
+
+/* text */
+.intro-text {
+    font-size: 22px;
+    font-weight: bold;
+    color: #5c3d36;
+    margin-bottom: 10px;
+}
+
+.intro-hint {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* animation */
+@keyframes introPop {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
