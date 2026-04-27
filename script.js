@@ -1,6 +1,6 @@
 const noteColors = ["#fff9c4","#ffecb3","#ffcdd2","#bbdefb","#d1c4e9","#c8e6c9"];
 const pinColors = ["#e53935","#1e88e5","#fdd835","#8e24aa","#43a047"];
-const decors = ["📎","📌","🧷","📖","✏️","📝","🌿","🍃","🌸","💌","📮","💭"];
+const decors = ["📎","📌","🧷","🌸","💌","🍃"];
 
 let userId = localStorage.getItem("userId");
 if(!userId){
@@ -26,23 +26,9 @@ function openForm(){
 }
 
 function closeForm(e){
-    if(e.target.id === "overlay"){
+    if(e.target === overlay){
         overlay.style.display = "none";
     }
-}
-
-/* POPUP */
-function showPopup(name, msg, time){
-    popupText.innerHTML = `
-        <div class="popup-name">${name}</div>
-        <div class="popup-msg">${msg}</div>
-        <div class="popup-time">${time || ""}</div>
-    `;
-    popup.style.display="flex";
-}
-
-function closePopup(){
-    popup.style.display="none";
 }
 
 /* NOTE */
@@ -52,63 +38,40 @@ function createNote(noteData, index){
     const note = document.createElement("div");
     note.className = "note";
 
-    const bg = rand(noteColors);
-    note.style.background = bg;
+    note.style.background = rand(noteColors);
     note.style.setProperty("--rotate",(Math.random()*8-4)+"deg");
 
-    let pinColor;
-    do {
-        pinColor = rand(pinColors);
-    } while(pinColor === bg);
+    if(owner === userId){
+        note.classList.add("my-note");
+    }
 
     const pin = document.createElement("div");
     pin.className = "pin";
-    pin.style.background = pinColor;
+    pin.style.background = rand(pinColors);
     note.appendChild(pin);
 
-    const c = document.createElement("div");
-    c.className = "note-content";
-    c.innerHTML = `
+    if(owner === userId){
+        const crown = document.createElement("div");
+        crown.className = "owner-icon";
+        crown.innerText = "👑";
+        note.appendChild(crown);
+    }
+
+    const content = document.createElement("div");
+    content.className = "note-content";
+
+    content.innerHTML = `
         <div class="note-name">${name}</div>
         <div class="note-msg">${msg}</div>
-        <div class="more-hint">Xem thêm...</div>
-        <div class="note-time">${time || ""}</div>
+        <div class="note-time">${time}</div>
+        <div class="more-hint">xem thêm 💌</div>
     `;
-    note.appendChild(c);
 
-    setTimeout(()=>{
-        const msgDiv = c.querySelector(".note-msg");
-        const hint = c.querySelector(".more-hint");
-        if(msgDiv.scrollHeight <= msgDiv.clientHeight){
-            hint.style.display = "none";
-        }
-    },0);
-
-    const positions = [
-        {top:"5px",left:"5px"},
-        {top:"5px",right:"5px"},
-        {bottom:"5px",left:"5px"},
-        {bottom:"5px",right:"5px"}
-    ];
-
-    for(let i=0;i<2;i++){
-        const d = document.createElement("div");
-        d.className = "decor";
-        d.innerText = rand(decors);
-        Object.assign(d.style, rand(positions));
-        note.appendChild(d);
-    }
+    note.appendChild(content);
 
     note.onclick = () => showPopup(name, msg, time);
 
     if(owner === userId){
-        note.classList.add("my-note");
-
-        const crown = document.createElement("div");
-        crown.innerText = "👑";
-        crown.className = "owner-icon";
-        note.appendChild(crown);
-
         const del = document.createElement("div");
         del.innerText = "❌";
         del.className = "delete";
@@ -133,21 +96,15 @@ function addNote(){
 
     if(!name || !msg) return alert("Nhập đủ!");
 
-    const notes = loadNotes();
     const time = new Date().toLocaleString();
 
-    notes.push({name,msg,owner:userId,time});
+    const notes = loadNotes();
+    notes.push({name, msg, owner:userId, time});
     saveNotes(notes);
 
     overlay.style.display="none";
     nameInput.value="";
     msgInput.value="";
-
-    const sound = document.getElementById("popSound");
-    if(sound){
-        sound.currentTime = 0;
-        sound.play();
-    }
 
     renderNotes();
 }
@@ -159,7 +116,21 @@ function renderNotes(){
     });
 }
 
-/* CLOVER */
+/* POPUP */
+function showPopup(name, msg, time){
+    popupText.innerHTML = `
+        <div class="popup-name">${name}</div>
+        <div class="popup-msg">${msg}</div>
+        <div class="popup-time">${time}</div>
+    `;
+    popup.style.display="flex";
+}
+
+function closePopup(){
+    popup.style.display="none";
+}
+
+/* EFFECT */
 function createClover(){
     const c = document.createElement("div");
     c.className = "clover";
