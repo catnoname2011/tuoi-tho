@@ -326,3 +326,153 @@ body::after {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+/* 🌸 FORM BACKGROUND */
+.form-card {
+    width: 550px;
+    max-width: 92%;
+
+    padding: 35px 30px;
+    border-radius: 28px;
+
+    background: linear-gradient(135deg, #fff6f0, #ffe9e3);
+    position: relative;
+
+    box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+
+    animation: formPop 0.35s ease;
+}
+
+/* viền nét đứt */
+.form-card::after {
+    content: "";
+    position: absolute;
+    inset: 15px;
+    border-radius: 22px;
+    border: 2px dashed #f5b5b5;
+}
+
+/* ✨ TITLE */
+.form-title {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+
+    color: #5c3d36;
+
+    margin-bottom: 25px;
+
+    font-family: "Comic Sans MS", cursive;
+}
+
+/* GROUP */
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* ICON */
+.icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.6;
+}
+
+.icon.right {
+    left: auto;
+    right: 12px;
+}
+
+/* INPUT */
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 40px;
+
+    border-radius: 16px;
+    border: 2px solid #f3b6b6;
+
+    background: rgba(255,255,255,0.8);
+
+    font-size: 15px;
+    outline: none;
+
+    transition: 0.2s;
+}
+
+/* focus */
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #ff8fa3;
+    box-shadow: 0 0 0 3px rgba(255,143,163,0.2);
+}
+
+/* textarea */
+.form-group textarea {
+    height: 130px;
+    resize: none;
+}
+
+/* BUTTON */
+.form-btn {
+    width: 70%;
+    margin: 25px auto 0;
+    display: block;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 25px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    color: white;
+
+    background: linear-gradient(45deg, #ff9a9e, #ff6a88);
+
+    cursor: pointer;
+    transition: 0.25s;
+
+    box-shadow: 0 12px 30px rgba(255,106,136,0.4);
+}
+
+.form-btn:hover {
+    transform: translateY(-2px);
+}
+
+.form-btn:active {
+    transform: scale(0.96);
+}
+
+/* 🌸 STICKERS */
+.sticker {
+    position: absolute;
+    z-index: 2;
+}
+
+/* băng keo */
+.tape {
+    width: 100px;
+    height: 40px;
+    background: rgba(255,182,193,0.7);
+    top: -15px;
+    left: 20px;
+    transform: rotate(-15deg);
+    border-radius: 10px;
+}
+
+/* hoa */
+.flower {
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+}
+
+/* tim */
+.heart {
+    bottom: 10px;
+    right: 25px;
+    font-size: 26px;
+}
