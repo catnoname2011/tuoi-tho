@@ -555,3 +555,79 @@ body {
         opacity: 1;
     }
 }
+
+/* ===== FORCE NOTE = FORM STYLE ===== */
+.note {
+    width: 110px !important;
+    min-height: 110px !important;
+    padding: 10px !important;
+
+    border-radius: 25px !important;
+
+    background: linear-gradient(135deg, #fffaf5, #ffe9e3) !important;
+
+    border: 2px solid #f3b6b6 !important;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.25),
+        0 0 20px rgba(255,150,150,0.3) !important;
+
+    position: relative;
+}
+
+/* viền nét đứt giống form */
+.note::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+
+    border-radius: 20px;
+    border: 2px dashed #f5b5b5;
+
+    pointer-events: none;
+}
+
+/* băng keo giống form */
+.note::before {
+    content: "";
+    position: absolute;
+
+    width: 70px;
+    height: 22px;
+
+    background: rgba(255,182,193,0.7);
+
+    top: -10px;
+    left: 15px;
+
+    transform: rotate(-15deg);
+    border-radius: 8px;
+
+    pointer-events: none;
+}
+
+/* TEXT đồng bộ */
+.note-name {
+    font-size: 12px;
+    font-weight: bold;
+    color: #5c3d36;
+}
+
+.note-msg {
+    font-size: 11px;
+    color: #444;
+}
+
+.note-time {
+    font-size: 9px;
+    color: #888;
+}
+
+/* hover giống form nổi */
+.note:hover {
+    transform: translateY(-4px) scale(1.05) rotate(var(--rotate)) !important;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.3),
+        0 0 25px rgba(255,150,150,0.4) !important;
+}
