@@ -147,6 +147,11 @@ function createClover(){
 
 setInterval(createClover,300);
 
+/* INTRO */
+function closeIntro(){
+    document.getElementById("intro").style.display = "none";
+}
+
 /* INIT */
 const board = document.getElementById("board");
 const overlay = document.getElementById("overlay");
