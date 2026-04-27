@@ -31,25 +31,58 @@ function closeForm(e){
     }
 }
 
+/* POPUP */
+function showPopup(name, msg, time){
+    popupText.innerHTML = `
+        <div class="popup-name">${name}</div>
+        <div class="popup-msg">${msg}</div>
+        <div class="popup-time">${time || ""}</div>
+    `;
+    popup.style.display="flex";
+}
+
+function closePopup(){
+    popup.style.display="none";
+}
+
 /* NOTE */
 function createNote(noteData, index){
-    const {name, msg, owner} = noteData;
+    const {name, msg, owner, time} = noteData;
 
     const note = document.createElement("div");
     note.className = "note";
 
-    note.style.background = rand(noteColors);
+    const bg = rand(noteColors);
+    note.style.background = bg;
     note.style.setProperty("--rotate",(Math.random()*8-4)+"deg");
+
+    let pinColor;
+    do {
+        pinColor = rand(pinColors);
+    } while(pinColor === bg);
 
     const pin = document.createElement("div");
     pin.className = "pin";
-    pin.style.background = rand(pinColors);
+    pin.style.background = pinColor;
     note.appendChild(pin);
 
     const c = document.createElement("div");
     c.className = "note-content";
-    c.innerHTML = `<b>${name}</b><br><small>Xem lời chúc 💌</small>`;
+    c.innerHTML = `
+        <div class="note-name">${name}</div>
+        <div class="note-msg">${msg}</div>
+        <div class="more-hint">Xem thêm...</div>
+        <div class="note-time">${time || ""}</div>
+    `;
     note.appendChild(c);
+
+    setTimeout(()=>{
+        const msgDiv = c.querySelector(".note-msg");
+        const hint = c.querySelector(".more-hint");
+        if(msgDiv.scrollHeight <= msgDiv.clientHeight){
+            hint.style.display = "none";
+        }
+    },0);
 
     const positions = [
         {top:"5px",left:"5px"},
@@ -66,9 +99,16 @@ function createNote(noteData, index){
         note.appendChild(d);
     }
 
-    note.onclick = () => showPopup(name + ": " + msg);
+    note.onclick = () => showPopup(name, msg, time);
 
     if(owner === userId){
+        note.classList.add("my-note");
+
+        const crown = document.createElement("div");
+        crown.innerText = "👑";
+        crown.className = "owner-icon";
+        note.appendChild(crown);
+
         const del = document.createElement("div");
         del.innerText = "❌";
         del.className = "delete";
@@ -94,12 +134,20 @@ function addNote(){
     if(!name || !msg) return alert("Nhập đủ!");
 
     const notes = loadNotes();
-    notes.push({name,msg,owner:userId});
+    const time = new Date().toLocaleString();
+
+    notes.push({name,msg,owner:userId,time});
     saveNotes(notes);
 
     overlay.style.display="none";
     nameInput.value="";
     msgInput.value="";
+
+    const sound = document.getElementById("popSound");
+    if(sound){
+        sound.currentTime = 0;
+        sound.play();
+    }
 
     renderNotes();
 }
@@ -109,16 +157,6 @@ function renderNotes(){
     loadNotes().forEach((n,i)=>{
         board.appendChild(createNote(n,i));
     });
-}
-
-/* POPUP */
-function showPopup(t){
-    popupText.innerText = t;
-    popup.style.display="flex";
-}
-
-function closePopup(){
-    popup.style.display="none";
 }
 
 /* CLOVER */
