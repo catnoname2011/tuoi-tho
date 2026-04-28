@@ -544,27 +544,43 @@ body {
     z-index: 999;
 }
 
-/* khung chính */
+/* reset tránh bị style khác phá */
+#intro, #intro * {
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+/* lớp nền */
+#intro {
+    position: fixed !important;
+    inset: 0 !important;
+
+    background: rgba(0,0,0,0.55) !important;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    z-index: 999999 !important;
+}
+
+/* khung */
 .intro-box {
-    padding: 20px 30px;
-    border-radius: 18px;
+    padding: 20px 28px !important;
+    border-radius: 18px !important;
 
     background: linear-gradient(
         135deg,
-        rgba(255,255,255,0.5),
-        rgba(255,255,255,0.25)
-    );
+        rgba(255,255,255,0.9),
+        rgba(255,255,255,0.7)
+    ) !important;
 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    color: #111 !important;
+    text-align: center !important;
 
-    border: 1px solid rgba(255,255,255,0.6);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.3) !important;
 
-    text-align: center;
-    color: #111;
-
-    animation: fadeIn 0.4s ease;
+    animation: introFade 0.4s ease !important;
 }
 
 /* chữ nhỏ */
@@ -572,11 +588,11 @@ body {
     display: block;
     font-size: 13px;
     opacity: 0.7;
-    margin-top: 5px;
+    margin-top: 6px;
 }
 
-/* hiệu ứng */
-@keyframes fadeIn {
+/* animation */
+@keyframes introFade {
     from {
         opacity: 0;
         transform: scale(0.9);
