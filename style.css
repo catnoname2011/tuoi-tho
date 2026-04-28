@@ -1,11 +1,10 @@
+/* ===== RESET ===== */
 html, body {
     height: 100%;
     margin: 0;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
     font-family: "Segoe UI", sans-serif;
 
     background-image: url("./ss.png");
@@ -46,22 +45,30 @@ body {
     transform: scale(1.2);
 }
 
-/* ===== BOARD ===== */
+/* ===== BOARD (Pinterest layout) ===== */
 .board {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: flex-start;
-    gap: 25px;
-    padding: 20px;
+    column-count: 4;
+    column-gap: 20px;
+
+    padding: 100px 20px 20px;
+}
+
+/* responsive */
+@media (max-width: 1200px) {
+    .board { column-count: 3; }
+}
+@media (max-width: 800px) {
+    .board { column-count: 2; }
+}
+@media (max-width: 500px) {
+    .board { column-count: 1; }
 }
 
 /* ===== NOTE ===== */
 .note {
-    width: 140px;
-    min-height: 140px;
-    padding: 12px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
 
     position: relative;
     cursor: pointer;
@@ -78,6 +85,8 @@ body {
 
     transition: 0.25s;
     animation: notePop 0.35s ease;
+
+    break-inside: avoid;
 }
 
 @keyframes notePop {
@@ -91,6 +100,35 @@ body {
     box-shadow:
         0 20px 40px rgba(0,0,0,0.3),
         0 0 18px rgba(255,150,150,0.4);
+}
+
+/* viền nét đứt */
+.note::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-radius: 18px;
+    border: 2px dashed #f5b5b5;
+    pointer-events: none;
+}
+
+/* băng keo */
+.note::before {
+    content: "";
+    position: absolute;
+
+    width: 55px;
+    height: 18px;
+
+    background: rgba(255,182,193,0.6);
+
+    top: -8px;
+    left: 15px;
+
+    transform: rotate(-15deg);
+    border-radius: 6px;
+
+    pointer-events: none;
 }
 
 /* ===== TEXT ===== */
@@ -118,6 +156,7 @@ body {
     left: 0;
     right: 0;
     height: 20px;
+
     background: linear-gradient(transparent, rgba(255,245,240,0.95));
 }
 
@@ -141,6 +180,7 @@ body {
     width: 14px;
     height: 14px;
     border-radius: 50%;
+
     position: absolute;
     top: -7px;
     left: 50%;
@@ -150,6 +190,7 @@ body {
 /* ===== OWNER ===== */
 .my-note {
     border: 2px solid #ff6a88;
+
     box-shadow:
         0 15px 35px rgba(255,106,136,0.4),
         0 0 15px rgba(255,106,136,0.5);
@@ -221,8 +262,10 @@ body {
     position: absolute;
     width: 120px;
     height: 120px;
+
     background: url("https://pngimg.com/uploads/leaf/leaf_PNG36831.png") no-repeat;
     background-size: contain;
+
     bottom: 10px;
     left: -30px;
     opacity: 0.8;
@@ -251,9 +294,6 @@ body {
 
 .input-box textarea {
     background: url("https://cdn-icons-png.flaticon.com/512/2462/2462719.png") no-repeat 12px 14px / 18px;
-}
-
-.input-box textarea {
     height: 110px;
 }
 
