@@ -5,6 +5,8 @@ html, body {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
     font-family: "Segoe UI", sans-serif;
 
     background-image: url("./ss.png");
@@ -45,15 +47,13 @@ body {
     transform: scale(1.2);
 }
 
-/* ===== BOARD (Pinterest layout) ===== */
+/* ===== BOARD (Pinterest) ===== */
 .board {
     column-count: 4;
     column-gap: 20px;
-
     padding: 100px 20px 20px;
 }
 
-/* responsive */
 @media (max-width: 1200px) {
     .board { column-count: 3; }
 }
@@ -116,18 +116,13 @@ body {
 .note::before {
     content: "";
     position: absolute;
-
     width: 55px;
     height: 18px;
-
     background: rgba(255,182,193,0.6);
-
     top: -8px;
     left: 15px;
-
     transform: rotate(-15deg);
     border-radius: 6px;
-
     pointer-events: none;
 }
 
@@ -156,7 +151,6 @@ body {
     left: 0;
     right: 0;
     height: 20px;
-
     background: linear-gradient(transparent, rgba(255,245,240,0.95));
 }
 
@@ -180,7 +174,6 @@ body {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-
     position: absolute;
     top: -7px;
     left: 50%;
@@ -190,7 +183,6 @@ body {
 /* ===== OWNER ===== */
 .my-note {
     border: 2px solid #ff6a88;
-
     box-shadow:
         0 15px 35px rgba(255,106,136,0.4),
         0 0 15px rgba(255,106,136,0.5);
@@ -230,7 +222,6 @@ body {
 .input-box {
     width: 520px;
     max-width: 92%;
-
     padding: 30px;
     border-radius: 25px;
 
@@ -262,10 +253,8 @@ body {
     position: absolute;
     width: 120px;
     height: 120px;
-
     background: url("https://pngimg.com/uploads/leaf/leaf_PNG36831.png") no-repeat;
     background-size: contain;
-
     bottom: 10px;
     left: -30px;
     opacity: 0.8;
@@ -276,12 +265,10 @@ body {
 .input-box textarea {
     width: 100%;
     max-width: 420px;
-
     padding: 12px 40px;
 
     border-radius: 14px;
     border: 2px solid #f3b6b6;
-
     background: white;
 
     font-size: 14px;
@@ -314,7 +301,6 @@ body {
     font-weight: bold;
 
     background: linear-gradient(45deg, #ff9a9e, #ff6a88);
-
     box-shadow: 0 10px 25px rgba(255,106,136,0.4);
 
     cursor: pointer;
@@ -372,4 +358,22 @@ body {
         opacity: 1;
         transform: scale(1);
     }
+}
+
+/* ===== CLOVER EFFECT (lá rơi) ===== */
+.clover-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.clover {
+    position: absolute;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10vh); opacity: 0; }
+    100% { transform: translateY(110vh); opacity: 0; }
 }
