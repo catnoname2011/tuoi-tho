@@ -1,12 +1,18 @@
 /* ===== RESET ===== */
 html, body {
-    margin: 0;
     height: 100%;
+    margin: 0;
 }
 
 body {
+    display: flex;
+    flex-direction: column;
     font-family: "Segoe UI", sans-serif;
-    background: url("./ss.png") center/cover fixed no-repeat;
+
+    background-image: url("./ss.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 /* ===== MENU ===== */
@@ -26,185 +32,270 @@ body {
 .arrow {
     font-size: 18px;
     color: #ff6a88;
-    animation: arrowMove 1.2s infinite;
+    animation: arrowMove 1.2s infinite ease-in-out;
 }
 
 @keyframes arrowMove {
-    0% { transform: translateX(0); opacity: .6; }
-    50% { transform: translateX(6px); opacity: 1; }
-    100% { transform: translateX(0); opacity: .6; }
+    0%   { transform: translateX(0); opacity: 0.6; }
+    50%  { transform: translateX(6px); opacity: 1; }
+    100% { transform: translateX(0); opacity: 0.6; }
 }
 
-/* ===== BOARD (Pinterest) ===== */
+/* ===== BOARD (FLEX) ===== */
 .board {
-    column-count: 4;
-    column-gap: 20px;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+
+    gap: 20px;
     padding: 120px 20px 20px;
 }
 
-@media (max-width: 1000px){ .board{ column-count:3 } }
-@media (max-width: 700px){ .board{ column-count:2 } }
-@media (max-width: 500px){ .board{ column-count:1 } }
-
-/* ===== NOTE ===== */
+/* ===== NOTE (STYLE MỚI) ===== */
 .note {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 20px;
-
+    width: 140px;
+    min-height: 140px;
     padding: 12px;
-    border-radius: 18px;
 
     position: relative;
     cursor: pointer;
 
-    background: linear-gradient(135deg,#fffaf5,#ffe9e3);
-    border: 2px solid rgba(255,182,193,.35);
+    border-radius: 22px;
 
-    box-shadow: 0 10px 25px rgba(0,0,0,.2);
+    background: linear-gradient(135deg, #fffaf5, #ffe9e3);
+    border: 2px solid rgba(255,182,193,0.4);
 
-    break-inside: avoid;
-    transition: .25s;
+    box-shadow:
+        0 12px 25px rgba(0,0,0,0.2),
+        0 0 10px rgba(255,150,150,0.25);
+
+    transition: 0.25s;
 }
 
+/* hover */
 .note:hover {
-    transform: translateY(-5px) scale(1.05);
+    transform: translateY(-6px) scale(1.05) rotate(var(--rotate));
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.3),
+        0 0 18px rgba(255,150,150,0.4);
 }
 
-/* viền */
+/* viền nét đứt */
 .note::after {
-    content:"";
-    position:absolute;
-    inset:8px;
-    border-radius:14px;
-    border:2px dashed #f5b5b5;
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-radius: 18px;
+    border: 2px dashed #f5b5b5;
+    pointer-events: none;
 }
 
 /* băng keo */
 .note::before {
-    content:"";
-    position:absolute;
-    width:50px;
-    height:16px;
-    background:rgba(255,182,193,.6);
-    top:-8px;
-    left:15px;
-    transform:rotate(-12deg);
-    border-radius:5px;
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 16px;
+
+    background: linear-gradient(45deg, #ffd1dc, #ffb6c1);
+
+    top: -8px;
+    left: 15px;
+
+    transform: rotate(-12deg);
+    border-radius: 6px;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* text */
-.note-name { font-weight:bold; }
-.note-msg {
-    font-size:12px;
-    max-height:3.6em;
-    overflow:hidden;
+/* TEXT */
+.note-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #5c3d36;
+    margin-bottom: 5px;
 }
-.note:hover .note-msg { max-height:200px; }
+
+.note-msg {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #444;
+
+    max-height: 3.6em;
+    overflow: hidden;
+    position: relative;
+}
+
+.note-msg::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: linear-gradient(transparent, rgba(255,245,240,0.95));
+}
+
+.note:hover .note-msg {
+    max-height: 200px;
+}
 
 .note-time {
-    font-size:10px;
-    opacity:.6;
+    font-size: 10px;
+    color: #888;
 }
 
-/* pin */
+.more-hint {
+    font-size: 10px;
+    opacity: 0.6;
+    text-align: right;
+}
+
+/* PIN */
 .pin {
-    width:12px;
-    height:12px;
-    border-radius:50%;
-    position:absolute;
-    top:-6px;
-    left:50%;
-    transform:translateX(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-/* owner */
+/* OWNER */
 .my-note {
-    border:2px solid #ff6a88;
+    border: 2px solid #ff6a88;
+    box-shadow:
+        0 12px 30px rgba(255,106,136,0.4);
 }
 
 .owner-icon {
-    position:absolute;
-    top:-8px;
-    right:-8px;
+    position: absolute;
+    top: -8px;
+    right: -8px;
 }
 
-/* delete */
+/* DELETE */
 .delete {
-    position:absolute;
-    top:3px;
-    right:6px;
-    cursor:pointer;
+    position: absolute;
+    top: 3px;
+    right: 6px;
+    cursor: pointer;
 }
 
-/* ===== FORM ===== */
+/* ===== OVERLAY ===== */
 .overlay {
     position: fixed;
     inset: 0;
+
     display: none;
     justify-content: center;
     align-items: center;
 
-    background: rgba(0,0,0,.4);
-    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(8px);
+
+    z-index: 1000;
 }
 
+/* ===== FORM ===== */
 .input-box {
-    background: linear-gradient(135deg,#fffaf5,#ffe9e3);
-    padding: 25px;
+    width: 520px;
+    max-width: 92%;
+
+    padding: 30px;
+    border-radius: 25px;
+
+    background: linear-gradient(135deg, #fffaf5, #ffe9e3);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.3),
+        0 0 20px rgba(255,150,150,0.3);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    position: relative;
+}
+
+.input-box::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
     border-radius: 20px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+    border: 2px dashed #f5b5b5;
 }
 
 .input-box input,
 .input-box textarea {
-    padding:10px;
-    border-radius:10px;
-    border:1px solid #f3b6b6;
+    width: 100%;
+    max-width: 420px;
+
+    padding: 12px;
+    border-radius: 14px;
+    border: 2px solid #f3b6b6;
+}
+
+/* button */
+.input-box button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+
+    color: white;
+    font-weight: bold;
+
+    background: linear-gradient(45deg, #ff9a9e, #ff6a88);
+    cursor: pointer;
 }
 
 /* ===== POPUP ===== */
 .popup {
     position: fixed;
     inset: 0;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    background: rgba(0,0,0,.5);
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.5);
 }
 
 .popup-box {
-    background:white;
-    padding:20px;
-    border-radius:15px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
 }
 
 /* ===== INTRO ===== */
 #intro {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.5);
-    display:flex;
-    justify-content:center;
-    align-items:center;
+
+    background: rgba(0,0,0,0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .intro-box {
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    cursor:pointer;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
 }
 
-/* ===== LÁ RƠI XỊN ===== */
+/* ===== LÁ RƠI ===== */
 .clover-container {
     position: fixed;
     inset: 0;
     pointer-events: none;
     overflow: hidden;
-    z-index: 1;
 }
 
 .clover {
@@ -212,11 +303,8 @@ body {
     top: -50px;
 
     animation: fall linear forwards, sway ease-in-out infinite;
-
-    transform-origin: center;
 }
 
-/* rơi */
 @keyframes fall {
     to {
         transform: translateY(110vh) rotate(360deg);
@@ -224,9 +312,8 @@ body {
     }
 }
 
-/* bay lượn */
 @keyframes sway {
-    0% { margin-left: 0px; }
+    0% { margin-left: 0; }
     50% { margin-left: 30px; }
-    100% { margin-left: 0px; }
+    100% { margin-left: 0; }
 }
