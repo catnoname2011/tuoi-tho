@@ -41,16 +41,49 @@ body {
     100% { transform: translateX(0); opacity: 0.6; }
 }
 
-/* ===== BOARD (FLEX) ===== */
+/* ===== BOARD - CÓ VÙNG TRỐNG Ở GIỮA ===== */
 .board {
     flex: 1;
+
     display: flex;
     flex-wrap: wrap;
+
     justify-content: center;
     align-content: flex-start;
+    align-items: flex-start;
 
-    gap: 20px;
-    padding: 120px 20px 20px;
+    gap: 24px;
+
+    padding: 120px 30px 30px;
+
+    max-width: 1100px;
+    margin: 0 auto;
+
+    position: relative;
+}
+
+/* 🎯 VÙNG TRỐNG (KHÔNG CHO NOTE ĐÈ) */
+.board::before {
+    content: "";
+    position: absolute;
+
+    width: 460px;
+    height: 280px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* tạo cảm giác "lỗ trống" */
+    background: transparent;
+
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* NOTE luôn nằm trên board */
+.note {
+    z-index: 2;
 }
 
 /* ===== NOTE (STYLE MỚI - CENTER + CÂN) ===== */
