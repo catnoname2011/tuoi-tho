@@ -8,20 +8,23 @@
 </head>
 
 <body>
-    
+
+<!-- INTRO -->
 <div id="intro" onclick="this.style.display='none'">
-    <div class="intro-box">
+    <div class="intro-box" onclick="event.stopPropagation()">
         <div class="intro-text">
             💌 Hãy chúc nhau những lời chúc tốt lành!
         </div>
         <div class="intro-hint">(chạm để tiếp tục)</div>
     </div>
 </div>
-    
+
+<!-- MENU -->
 <div class="menu-btn" onclick="openForm()">
     <span class="arrow">➤</span> ⋯
 </div>
 
+<!-- BOARD -->
 <div class="board" id="board"></div>
 
 <!-- FORM -->
@@ -39,8 +42,29 @@
     <div class="popup-box" id="popupText"></div>
 </div>
 
+<!-- LÁ RƠI -->
 <div class="clover-container"></div>
 
+<!-- 🔥 FIREBASE (QUAN TRỌNG) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "DÁN_API_KEY",
+    authDomain: "DÁN_AUTH_DOMAIN",
+    projectId: "DÁN_PROJECT_ID",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.db = db;
+  window.fb = { collection, addDoc, onSnapshot, deleteDoc, doc };
+</script>
+
+<!-- SCRIPT CHÍNH -->
 <script src="script.js"></script>
+
 </body>
 </html>
