@@ -2,7 +2,7 @@
 const noteColors = ["#fff9c4","#ffecb3","#ffcdd2","#bbdefb","#d1c4e9","#c8e6c9"];
 const pinColors = ["#e53935","#1e88e5","#fdd835","#8e24aa","#43a047"];
 
-// ===== USER ID (giữ lại để đánh dấu note của mình) =====
+// ===== USER ID =====
 let userId = localStorage.getItem("userId");
 if(!userId){
     userId = "u_" + Math.random().toString(36).slice(2);
@@ -48,7 +48,7 @@ function createNote(n, id){
 
     note.onclick = ()=>showPopup(n.name,n.msg,n.time);
 
-    // ===== DELETE (chỉ xoá note của mình) =====
+    // ===== DELETE (xoá chính xác bằng id) =====
     if(n.owner===userId){
         const del = document.createElement("div");
         del.className="delete";
@@ -56,7 +56,18 @@ function createNote(n, id){
 
         del.onclick = async (e)=>{
             e.stopPropagation();
-            await fb.deleteDoc(fb.doc(db, "notes", id));
+
+            if(!confirm("Xoá note này?")) return;
+
+            const { error } = await supabase
+                .from("notes")
+                .delete()
+                .eq("id", id);
+
+            if(error){
+                console.error(error);
+                alert("Không xoá được!");
+            }
         };
 
         note.appendChild(del);
@@ -65,7 +76,7 @@ function createNote(n, id){
     return note;
 }
 
-// ===== ADD NOTE (FIREBASE) =====
+// ===== ADD NOTE =====
 async function addNote(){
     const name = nameInput.value.trim();
     const msg = msgInput.value.trim();
@@ -75,15 +86,16 @@ async function addNote(){
     const time = new Date().toLocaleString();
 
     try{
-        await fb.addDoc(
-            fb.collection(db, "notes"),
-            {
+        const { error } = await supabase
+            .from("notes")
+            .insert([{
                 name,
                 msg,
                 time,
                 owner: userId
-            }
-        );
+            }]);
+
+        if(error) throw error;
 
         overlay.style.display="none";
         nameInput.value="";
@@ -94,20 +106,27 @@ async function addNote(){
     }
 }
 
-// ===== LOAD REALTIME =====
-function loadNotes(){
-    fb.onSnapshot(
-        fb.collection(db, "notes"),
-        (snapshot)=>{
-            board.innerHTML="";
-            snapshot.forEach(docSnap=>{
-                board.appendChild(
-                    createNote(docSnap.data(), docSnap.id)
-                );
-            });
-        }
-    );
+// ===== LOAD NOTES =====
+async function loadNotes(){
+    const { data, error } = await supabase
+        .from("notes")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    board.innerHTML="";
+
+    data.forEach(n=>{
+        board.appendChild(createNote(n, n.id));
+    });
 }
+
+// ===== AUTO REFRESH =====
+setInterval(loadNotes, 2000);
 
 // ===== POPUP =====
 function showPopup(name,msg,time){
