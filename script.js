@@ -157,7 +157,12 @@ setInterval(createClover,250);
 
 // ===== INTRO =====
 function closeIntro(){
-    document.getElementById("intro").style.display="none";
+    const intro = document.getElementById("intro");
+    intro.classList.add("hide");
+
+    setTimeout(()=>{
+        intro.style.display = "none";
+    }, 300);
 }
 
 // ===== INIT =====
