@@ -1,12 +1,15 @@
+// ===== COLOR =====
 const noteColors = ["#fff9c4","#ffecb3","#ffcdd2","#bbdefb","#d1c4e9","#c8e6c9"];
 const pinColors = ["#e53935","#1e88e5","#fdd835","#8e24aa","#43a047"];
 
+// ===== USER ID (giữ lại để đánh dấu note của mình) =====
 let userId = localStorage.getItem("userId");
 if(!userId){
     userId = "u_" + Math.random().toString(36).slice(2);
     localStorage.setItem("userId", userId);
 }
 
+// ===== ELEMENT =====
 const board = document.getElementById("board");
 const overlay = document.getElementById("overlay");
 const nameInput = document.getElementById("name");
@@ -14,19 +17,17 @@ const msgInput = document.getElementById("msg");
 const popup = document.getElementById("popup");
 const popupText = document.getElementById("popupText");
 
+// ===== UTILS =====
 function rand(arr){
     return arr[Math.floor(Math.random()*arr.length)];
 }
 
-function saveNotes(n){ localStorage.setItem("notes9A1", JSON.stringify(n)); }
-function loadNotes(){ return JSON.parse(localStorage.getItem("notes9A1")||"[]"); }
-
-/* FORM */
+// ===== FORM =====
 function openForm(){ overlay.style.display="flex"; }
 function closeForm(e){ if(e.target===overlay) overlay.style.display="none"; }
 
-/* NOTE */
-function createNote(n,i){
+// ===== NOTE UI =====
+function createNote(n, id){
     const note = document.createElement("div");
     note.className = "note";
 
@@ -47,51 +48,68 @@ function createNote(n,i){
 
     note.onclick = ()=>showPopup(n.name,n.msg,n.time);
 
+    // ===== DELETE (chỉ xoá note của mình) =====
     if(n.owner===userId){
         const del = document.createElement("div");
         del.className="delete";
         del.innerText="❌";
-        del.onclick=(e)=>{
+
+        del.onclick = async (e)=>{
             e.stopPropagation();
-            const notes=loadNotes();
-            notes.splice(i,1);
-            saveNotes(notes);
-            renderNotes();
+            await fb.deleteDoc(fb.doc(db, "notes", id));
         };
+
         note.appendChild(del);
     }
 
     return note;
 }
 
-function addNote(){
-    const name=nameInput.value.trim();
-    const msg=msgInput.value.trim();
-    if(!name||!msg) return alert("Nhập đủ!");
+// ===== ADD NOTE (FIREBASE) =====
+async function addNote(){
+    const name = nameInput.value.trim();
+    const msg = msgInput.value.trim();
 
-    const notes=loadNotes();
-    notes.push({
-        name,
-        msg,
-        time:new Date().toLocaleString(),
-        owner:userId
-    });
+    if(!name || !msg) return alert("Nhập đủ!");
 
-    saveNotes(notes);
-    overlay.style.display="none";
-    nameInput.value="";
-    msgInput.value="";
-    renderNotes();
+    const time = new Date().toLocaleString();
+
+    try{
+        await fb.addDoc(
+            fb.collection(db, "notes"),
+            {
+                name,
+                msg,
+                time,
+                owner: userId
+            }
+        );
+
+        overlay.style.display="none";
+        nameInput.value="";
+        msgInput.value="";
+    }catch(err){
+        console.error(err);
+        alert("Lỗi: " + err.message);
+    }
 }
 
-function renderNotes(){
-    board.innerHTML="";
-    loadNotes().forEach((n,i)=>{
-        board.appendChild(createNote(n,i));
-    });
+// ===== LOAD REALTIME =====
+function loadNotes(){
+    fb.onSnapshot(
+        fb.collection(db, "notes"),
+        (snapshot)=>{
+            board.innerHTML="";
+            snapshot.forEach(docSnap=>{
+                board.appendChild(
+                    createNote(docSnap.data(), docSnap.id)
+                );
+            });
+        }
+    );
 }
 
-/* POPUP */
+// ===== POPUP =====
 function showPopup(name,msg,time){
     popupText.innerHTML=`
         <b>${name}</b><br>
@@ -101,7 +119,7 @@ function showPopup(name,msg,time){
 }
 function closePopup(){ popup.style.display="none"; }
 
-/* 🌿 LÁ RƠI XỊN */
+// ===== 🌿 LÁ RƠI =====
 function createClover(){
     const c=document.createElement("div");
     c.className="clover";
@@ -118,10 +136,10 @@ function createClover(){
 }
 setInterval(createClover,250);
 
-/* INTRO */
+// ===== INTRO =====
 function closeIntro(){
     document.getElementById("intro").style.display="none";
 }
 
-/* INIT */
-renderNotes();
+// ===== INIT =====
+loadNotes();
