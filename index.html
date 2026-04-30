@@ -45,16 +45,19 @@
 <!-- LÁ RƠI -->
 <div class="clover-container"></div>
 
-<!-- 🔥 SUPABASE -->
+<!-- 🔥 SUPABASE (CHUẨN V2) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const supabase = window.supabase.createClient(
+const { createClient } = supabase;
+
+const supabaseClient = createClient(
   "https://ftyseslhwfpspqchtdwf.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0eXNlc2xod2Zwc3BxY2h0ZHdmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjQ4NTksImV4cCI6MjA5MzE0MDg1OX0.pSZHiT61ecqA7gTcfw24f1td7y8afteTwCo--_ESLTA"
 );
 
-window.supabase = supabase;
+// gán ra global để script.js dùng
+window.supabase = supabaseClient;
 </script>
 
 <!-- SCRIPT CHÍNH -->
