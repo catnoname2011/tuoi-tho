@@ -351,6 +351,7 @@ body {
     animation: introPop 0.4s ease;
 }
 
+
 /* VIỀN */
 .intro-box::after {
     content: "";
@@ -426,4 +427,13 @@ body {
     0% { margin-left: 0; }
     50% { margin-left: 30px; }
     100% { margin-left: 0; }
+}
+
+#intro {
+  pointer-events: auto;
+}
+
+#intro.hide {
+  pointer-events: none;
+  opacity: 0;
 }
