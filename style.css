@@ -263,6 +263,7 @@ body {
     gap: 12px;
 
     position: relative;
+    z-index: 1001; /* 🔥 thêm dòng này */
 }
 
 .input-box::after {
@@ -271,6 +272,8 @@ body {
     inset: 12px;
     border-radius: 20px;
     border: 2px dashed #f5b5b5;
+
+    pointer-events: none;
 }
 
 .input-box input,
