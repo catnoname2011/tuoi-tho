@@ -45,22 +45,16 @@
 <!-- LÁ RƠI -->
 <div class="clover-container"></div>
 
-<!-- 🔥 FIREBASE (QUAN TRỌNG) -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+<!-- 🔥 SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-  const firebaseConfig = {
-    apiKey: "DÁN_API_KEY",
-    authDomain: "DÁN_AUTH_DOMAIN",
-    projectId: "DÁN_PROJECT_ID",
-  };
+<script>
+const supabase = window.supabase.createClient(
+  "https://ftyseslhwfpspqchtdwf.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0eXNlc2xod2Zwc3BxY2h0ZHdmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjQ4NTksImV4cCI6MjA5MzE0MDg1OX0.pSZHiT61ecqA7gTcfw24f1td7y8afteTwCo--_ESLTA"
+);
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  window.db = db;
-  window.fb = { collection, addDoc, onSnapshot, deleteDoc, doc };
+window.supabase = supabase;
 </script>
 
 <!-- SCRIPT CHÍNH -->
